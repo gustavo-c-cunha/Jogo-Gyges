@@ -1,15 +1,11 @@
 # Jogo Gyges
-<p align="center">
-    <img src="https://raw.githubusercontent.com/gustavo-c-cunha/Jogo-Gyges/master/novoEsbocoInterface.png"> 
-</p>
-
 O jogo Gyges foi criado por Claude Leroy em 1984. Esse jogo é tradicionalmente praticado entre dois jogadores. Para jogar, utiliza-se um tabuleiro de 6x6 casas, mais duas casas de vitória, totalizando 38 casas. Além disso, são utilizadas 12 peças, de 3 níveis diferentes (diferenciadas pelo número de camadas que possuem), sendo 4 peças de cada nível. Na imagem abaixo, pode-se observar a dispodição do tabuleiro e das peças.
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/gustavo-c-cunha/Jogo-Gyges/master/posicaoPecas.png"> 
 </p>
 
-No início da partida, as peças são posicionadas nas colunas do tabuleiro mais proximas de cada jogador, sendo 6 peças em cada uma dessas colunas, com duas peças de cada nível (Observar imagem acima). O Objetivo do jogo é levar uma das peças até a casa de vitória do lado adversário. Para isso, os jogadores realizam movimentos em turnos alternados, movimentando uma peça por vez. Todas as peças podem ser movimentadas por qualquer um dos jogadores, repeitando apenas uma restrição: os participantes só podem movimentar a peça que está mais próxima de si.
+No início da partida, as peças são posicionadas nas colunas do tabuleiro mais proximas de cada jogador, sendo 6 peças em cada uma dessas colunas, com duas peças de cada nível (observar imagem acima). O Objetivo do jogo é levar uma das peças até a casa de vitória do lado adversário. Para isso, os jogadores realizam movimentos em turnos alternados, movimentando uma peça por vez. Todas as peças podem ser movimentadas por qualquer um dos jogadores, repeitando apenas uma restrição: os participantes só podem movimentar a peça que está mais próxima de si.
 
 As peças podem ser movimentadas vertical e horizontalmente, podendo percorrer o número de casas correspondente ao seu nível, assim, uma peça de nível 1 só pode percorrer uma casa por vez, enquanto uma peça de nível 3 pode percorrer 3 casas. Durante o movimento, as peças não podem transitar sobre outras peças, sendo permitido apenas encerrar o movimento sobre outra peça. Caso esta situação ocorra, o jogador tem duas opções, são elas:
   - Acrescentar o número de movimentos da peça que estava na casa a sua peça, podendo movimentá-la novamente. Por exemplo, se uma peça de nível 2 encerrou seus movimentos sobre uma peça de nível 3, o jogador pode movimentar sua peça de nível 2 por mais 3 casas.
