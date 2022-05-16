@@ -35,3 +35,5 @@ Ao atingir a casa de vitória do adversário, o jogador vence a partida. Todas a
 - As casas de vitória só podem ser alcançadas pelas duas casas que fazem vizinhança com esta, assim, a casa de vitória do jogador 1, só pode ser alcançada a partir das casas (3,1) e (4,1) e a casa de vitória do jogador 2, só pode ser alcançada a partir das casas (3,6) e (4,6).
 - Ao atingir a casa de vitória do adversário o jogador vence a partida.
 
+## Referências
+Um vídeo sobre o jogo pode ser acessado em: https://youtu.be/5V5a6SHK-KA
