@@ -1,9 +1,10 @@
 from tkinter import *
-
+from tabuleiro import Tabuleiro
 class PlayerInterface:
     def __init__(self):
 
         self.main_window = Tk()
+        self.board = Tabuleiro()
         self.fill_main_window()
         self.main_window.mainloop()
 
@@ -73,13 +74,17 @@ class PlayerInterface:
         self.main_window['menu'] = self.menubar
         self.menu_file = Menu(self.menubar)
         self.menubar.add_cascade(menu=self.menu_file, label='Menu')
-        self.menu_file.add_command(label='Iniciar jogo', command=self.start_match)
-        self.menu_file.add_command(label='Restaurar estado inicial', command=self.start_game)
+        self.menu_file.add_command(label='Iniciar jogo', command=self.iniciarPartida)
+        self.menu_file.add_command(label='Restaurar estado inicial', command=self.restaurarEstadoInicial)
 
-    def start_match(self):
-        print('start_match')
-
-    def start_game(self):
+    def iniciarPartida(self):
+        control = self.board.verificarPartida()
+        if control == True:
+            print('partida em andamento')
+        else:
+            print('iniciando partida')
+            self.board.setJogoEmAndamento(True)
+    def restaurarEstadoInicial(self):
         print('start_game')
 
     def click(self, event, line, column):

@@ -7,7 +7,7 @@ class Jogador():
         self.lado = lado
     
     def getJogador(self):
-        return self
+        return self.lado
 
     def resetarJogador(self):
         self.movimentos = 0
