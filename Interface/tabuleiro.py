@@ -154,7 +154,8 @@ class Tabuleiro():
             for j in range(6):
                 casa = self.casas[j][i].getOcupada()
                 if casa:
-                    if inicio == 1 and i == fim or fim == 6 and i == inicio:
+                    if (self.jogadorDaVez.getJogador() == 0 and i == fim) or (self.jogadorDaVez.getJogador() == 1 and i == fim):
+                        print("caso extranho")
                         pass
                     else:
                         return False
