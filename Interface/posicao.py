@@ -23,3 +23,6 @@ class Posicao():
         self.ocupada = False
         posicao.posicionarPeca(self.pecaPosicao)
         self.pecaPosicao = None
+
+    def getPecaPosicao(self):
+        return self.pecaPosicao

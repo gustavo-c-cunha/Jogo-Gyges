@@ -1,5 +1,6 @@
 from tkinter import *
 from tabuleiro import Tabuleiro
+from pprint import pprint
 class PlayerInterface:
     def __init__(self):
 
@@ -35,8 +36,11 @@ class PlayerInterface:
         self.message_frame = Frame(self.main_window, padx=0, pady=10, bg="#291A3B")
         self.message_frame.grid(row=0 , column=2)
 
-        # Definição de 2 imagens para o preenchimento inicial
-        self.an_image = PhotoImage(file="images/white_square.png") #pyimage1
+        # Definição das imagens do tabuleiro
+        self.empty_space = PhotoImage(file="images/white_square.png")
+        self.peca1 = PhotoImage(file="images/piece1.png")
+        self.peca2 = PhotoImage(file="images/piece2.png")
+        self.peca3 = PhotoImage(file="images/piece3.png")
         self.logo = PhotoImage(file="images/Gyges64.png")
 
         # Preenchimento de table_frame com 38 imagens iguais, organizadas em 6 linhas e 8 colunas, com coluna 0 e 7 diferentes
@@ -44,18 +48,18 @@ class PlayerInterface:
         for y in range(8):
             a_column = [] # column
             if y == 0:
-                aLabel = Label(self.table_frame_left, bd = 0, image=self.an_image)
+                aLabel = Label(self.table_frame_left, bd = 0, image=self.empty_space)
                 aLabel.grid(row=0 , column=y)
                 aLabel.bind("<Button-1>", lambda event, a_line=0, a_column=y: self.click(event, a_line, a_column))
                 a_column.append(aLabel)
             elif y == 7:
-                aLabel = Label(self.table_frame_right, bd = 0, image=self.an_image)
+                aLabel = Label(self.table_frame_right, bd = 0, image=self.empty_space)
                 aLabel.grid(row=0 , column=y)
                 aLabel.bind("<Button-1>", lambda event, a_line=0, a_column=y: self.click(event, a_line, a_column))
                 a_column.append(aLabel)
             else:
                 for x in range(6):
-                    aLabel = Label(self.table_frame_center, bd = 0, image=self.an_image)
+                    aLabel = Label(self.table_frame_center, bd = 0, image=self.empty_space)
                     aLabel.grid(row=x , column=y)
                     aLabel.bind("<Button-1>", lambda event, a_line=x, a_column=y: self.click(event, a_line, a_column))
                     a_column.append(aLabel)
@@ -82,10 +86,40 @@ class PlayerInterface:
         if control == True:
             print('partida em andamento')
         else:
-            print('iniciando partida')
             self.board.setJogoEmAndamento(True)
+            self.atualizarInterface()
     def restaurarEstadoInicial(self):
-        print('start_game')
+        self.board.limparTabuleiro()
+        self.atualizarInterface()
+
+    def atualizarInterface(self):
+        casas = self.board.getCasas()
+        for coluna in range(8):
+            for linha in range(6):
+                peca = casas[linha][coluna].getPecaPosicao()
+                if peca == None:
+                    break
+                if coluna == 0 or coluna == 7:
+                    if (peca.getTipo()==1):
+                        self.board_view[coluna][linha].configure(image=self.peca1)
+                        self.board_view[coluna][linha].image = self.peca1
+                    elif (peca.getTipo()==2):
+                        self.board_view[coluna][linha].configure(image=self.peca2)
+                        self.board_view[coluna][linha].image = self.peca2
+                    else:
+                        self.board_view[coluna][linha].configure(image=self.peca3)
+                        self.board_view[coluna][linha].image = self.peca3
+                    break
+                else:
+                    if (peca.getTipo()==1):
+                        self.board_view[coluna][linha].configure(image=self.peca1)
+                        self.board_view[coluna][linha].image = self.peca1
+                    elif (peca.getTipo()==2):
+                        self.board_view[coluna][linha].configure(image=self.peca2)
+                        self.board_view[coluna][linha].image = self.peca2
+                    else:
+                        self.board_view[coluna][linha].configure(image=self.peca3)
+                        self.board_view[coluna][linha].image = self.peca3
 
     def click(self, event, line, column):
         print('CLICK', line, column)

@@ -14,6 +14,9 @@ class Tabuleiro():
     def setJogoEmAndamento(self, estado):
         self.jogoEmAndamento = estado
     
+    def getCasas(self):
+        return self.casas
+
     def verificarPartida(self):
         # retorna um boolean
         if not(self.jogoEmAndamento):
@@ -37,7 +40,16 @@ class Tabuleiro():
 
     def limparTabuleiro(self):
         # não tem retorno
-        pass
+        self.jogadores[0].resetarJogador()
+        self.jogadores[1].resetarJogador()
+        for coluna in range(8):
+            for linha in range(6):
+                if coluna == 0 or coluna == 7:
+                    self.casas[linha][coluna].resetarPosicao()
+                    break
+                else:
+                    self.casas[linha][coluna].resetarPosicao()
+        self.setJogoEmAndamento(False)
 
     def getProximoJogador(self):
         # retorna um jogador

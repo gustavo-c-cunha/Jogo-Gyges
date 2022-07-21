@@ -9,3 +9,6 @@ class Peca():
 
     def resetarPeca(self):
         self.casasMovimento = self.tipo
+    
+    def getTipo(self):
+        return self.tipo
