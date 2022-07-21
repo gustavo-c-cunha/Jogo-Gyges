@@ -11,6 +11,7 @@ class Posicao():
 
     def posicionarPeca(self, peca):
         self.pecaPosicao = peca
+        self.ocupada = True
 
     def resetarPosicao(self):
         self.ocupada = False
@@ -26,3 +27,9 @@ class Posicao():
 
     def getPecaPosicao(self):
         return self.pecaPosicao
+
+    def getCoordenadas(self):
+        return self.coordenadas
+
+    def getOcupada(self):
+        return self.ocupada

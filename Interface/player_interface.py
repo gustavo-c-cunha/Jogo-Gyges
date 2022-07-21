@@ -50,18 +50,18 @@ class PlayerInterface:
             if y == 0:
                 aLabel = Label(self.table_frame_left, bd = 0, image=self.empty_space)
                 aLabel.grid(row=0 , column=y)
-                aLabel.bind("<Button-1>", lambda event, a_line=0, a_column=y: self.click(event, a_line, a_column))
+                aLabel.bind("<Button-1>", lambda event, a_line=0, a_column=y: self.selecionarPosicao(event, a_line, a_column))
                 a_column.append(aLabel)
             elif y == 7:
                 aLabel = Label(self.table_frame_right, bd = 0, image=self.empty_space)
                 aLabel.grid(row=0 , column=y)
-                aLabel.bind("<Button-1>", lambda event, a_line=0, a_column=y: self.click(event, a_line, a_column))
+                aLabel.bind("<Button-1>", lambda event, a_line=0, a_column=y: self.selecionarPosicao(event, a_line, a_column))
                 a_column.append(aLabel)
             else:
                 for x in range(6):
                     aLabel = Label(self.table_frame_center, bd = 0, image=self.empty_space)
                     aLabel.grid(row=x , column=y)
-                    aLabel.bind("<Button-1>", lambda event, a_line=x, a_column=y: self.click(event, a_line, a_column))
+                    aLabel.bind("<Button-1>", lambda event, a_line=x, a_column=y: self.selecionarPosicao(event, a_line, a_column))
                     a_column.append(aLabel)
             self.board_view.append(a_column)
 
@@ -88,6 +88,8 @@ class PlayerInterface:
         else:
             self.board.setJogoEmAndamento(True)
             self.atualizarInterface()
+            print(self.board.jogadorDaVez.getJogador())
+
     def restaurarEstadoInicial(self):
         self.board.limparTabuleiro()
         self.atualizarInterface()
@@ -95,12 +97,13 @@ class PlayerInterface:
     def atualizarInterface(self):
         casas = self.board.getCasas()
         for coluna in range(8):
-            for linha in range(6):
+            for linha in range(6):     
                 peca = casas[linha][coluna].getPecaPosicao()
-                if peca == None:
-                    break
                 if coluna == 0 or coluna == 7:
-                    if (peca.getTipo()==1):
+                    if peca == None:
+                        self.board_view[coluna][linha].configure(image=self.empty_space)
+                        self.board_view[coluna][linha].image = self.empty_space
+                    elif (peca.getTipo()==1):
                         self.board_view[coluna][linha].configure(image=self.peca1)
                         self.board_view[coluna][linha].image = self.peca1
                     elif (peca.getTipo()==2):
@@ -111,7 +114,10 @@ class PlayerInterface:
                         self.board_view[coluna][linha].image = self.peca3
                     break
                 else:
-                    if (peca.getTipo()==1):
+                    if peca == None:
+                        self.board_view[coluna][linha].configure(image=self.empty_space)
+                        self.board_view[coluna][linha].image = self.empty_space
+                    elif (peca.getTipo()==1):
                         self.board_view[coluna][linha].configure(image=self.peca1)
                         self.board_view[coluna][linha].image = self.peca1
                     elif (peca.getTipo()==2):
@@ -121,5 +127,10 @@ class PlayerInterface:
                         self.board_view[coluna][linha].configure(image=self.peca3)
                         self.board_view[coluna][linha].image = self.peca3
 
-    def click(self, event, line, column):
-        print('CLICK', line, column)
+    def selecionarPosicao(self, event, line, column):
+        print("CLICK"+" "+str(line)+" "+str(column))
+        if self.board.getEstado() == 0:
+            self.board.selecionarPeca(line, column)
+        else:
+            self.board.selecionarDestino(line, column)
+        self.atualizarInterface()
