@@ -77,39 +77,52 @@ class Tabuleiro():
         else:
             iInicial = self.posicaoMExtra[0]
             jInicial = self.posicaoMExtra[1]
-        soma = abs(iInicial-linha) + abs(jInicial-coluna)
         n = self.pecaSelecionada.getPecaPosicao().getCasasMovimento()
-        if n == soma:
-            return True
+        if linha == 0 and (coluna == 0 or coluna == 7):
+            soma = abs(iInicial-2) + abs(jInicial-coluna)
+            soma2 = abs(iInicial-3) + abs(jInicial-coluna)
+            if n == soma or n == soma2:
+                return True
+            else:
+                return False
         else:
-            return False
+            soma = abs(iInicial-linha) + abs(jInicial-coluna)
+            if n == soma:
+                return True
+            else:
+                return False
 
     def selecionarPeca(self, linha, coluna):
-        # não tem retorno 
+        # retorna uma string 
         if self.casas[linha][coluna].getOcupada() == False:
-            print("casa vazia")
+            return("Casa vazia")
         elif self.verificarPeca(self.casas[linha][coluna]):
             self.pecaSelecionada = self.casas[linha][coluna]
             self.setEstado(1)
+            return("Selecionado")
         else:
-            print("casa falhou na verificacao")
+            return("Peca invalida")
 
     def selecionarDestino(self, linha, coluna):
-        # não tem retorno
+        # retorna uma string 
         if self.verificarDestino(linha, coluna):
-            print("destino valido")
-            if self.verificarCasaVitoria():
-                return str(self.jogadorDaVez.getJogador())
+            vitoria = self.verificarCasaVitoria(linha, coluna)
+            if vitoria != 3:
+                self.pecaSelecionada.getPecaPosicao().resetarPeca()
+                self.pecaSelecionada.moverPeca(self.casas[linha][coluna])
+                return "Jogador "+str(vitoria)+" venceu!"
             else:
                 if self.verificarCasaVazia(self.casas[linha][coluna]):
                     self.pecaSelecionada.getPecaPosicao().resetarPeca()
                     self.pecaSelecionada.moverPeca(self.casas[linha][coluna])
                     self.getProximoJogador()
                     self.setEstado(0)
+                    return("Vez do jogador "+str(self.jogadorDaVez.getJogador()+1))
                 else:
                     self.posicaoMExtra = (linha, coluna)
                     self.pecaSelecionada.getPecaPosicao().incrementarMovimento(self.casas[linha][coluna].getPecaPosicao().getTipo())
                     self.setEstado(2)
+                    return("Mova ou Reposicione")
         else:
             if self.estadoMovimento == 2:
                 if self.validarDestinoR(linha, coluna):
@@ -118,25 +131,24 @@ class Tabuleiro():
                         self.casas[self.posicaoMExtra[0]][self.posicaoMExtra[1]].moverPeca(self.casas[linha][coluna])
                         self.pecaSelecionada.moverPeca(self.casas[self.posicaoMExtra[0]][self.posicaoMExtra[1]])
                         self.getProximoJogador()
-                        print(self.jogadorDaVez.getJogador())
-                        print("reposicionado")
                         self.setEstado(0)
+                        return("Vez do jogador "+str(self.jogadorDaVez.getJogador()+1))
                     else:
-                        print("coluna invalida")
+                        return("Coluna invalida")
                 else:
-                    print("destino invalido")
+                    return("Destino invalido")
             else:
-                print("destino invalido")
+                return("Destino invalido")
 
 
-    def verificarCasaVitoria(self):
+    def verificarCasaVitoria(self, linha, coluna):
         # retorna boolean
-        if self.casas[0][0].getPecaPosicao() != None:
-            return True
-        elif self.casas[0][7].getPecaPosicao() != None:
-            return True
+        if linha == 0 and coluna == 0:
+            return 2
+        elif linha == 0 and coluna == 7:
+            return 1
         else:
-            return False
+            return 3
 
     def verificarPeca(self, posicao):
         # retorna boolean
@@ -172,6 +184,7 @@ class Tabuleiro():
         return resultado
 
     def validarDestinoR(self, linha, coluna):
+        # retorna um boolean
         destino = self.casas[linha][coluna]
         ocupada = destino.getOcupada()
         if ocupada:

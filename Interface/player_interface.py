@@ -6,6 +6,7 @@ class PlayerInterface:
 
         self.main_window = Tk()
         self.board = Tabuleiro()
+        self.message = ""
         self.fill_main_window()
         self.main_window.mainloop()
 
@@ -14,7 +15,7 @@ class PlayerInterface:
         # Título, ícone, dimensionamento e fundo da janela
         self.main_window.title("Jogo Gyges")
         self.main_window.iconbitmap("images/Gyges32.ico")
-        self.main_window.geometry("1280x720")
+        self.main_window.geometry("1280x800")
         self.main_window.resizable(False, False)
         self.main_window["bg"]="#291A3B" #4D2C61
 
@@ -32,9 +33,11 @@ class PlayerInterface:
         self.table_frame_center.grid(row=1 , column=2)
         self.table_frame_right = Frame(self.main_window, padx=0, pady=10, bg="#291A3B")
         self.table_frame_right.grid(row=1 , column=3)
+        self.table_frame_bottom = Frame(self.main_window, padx=0, pady=10, bg="#291A3B")
+        self.table_frame_bottom.grid(row=2 , column=2)
 
-        self.message_frame = Frame(self.main_window, padx=0, pady=10, bg="#291A3B")
-        self.message_frame.grid(row=0 , column=2)
+        self.title_frame = Frame(self.main_window, padx=0, pady=10, bg="#291A3B")
+        self.title_frame.grid(row=0 , column=2)
 
         # Definição das imagens do tabuleiro
         self.empty_space = PhotoImage(file="images/white_square.png")
@@ -65,13 +68,17 @@ class PlayerInterface:
                     a_column.append(aLabel)
             self.board_view.append(a_column)
 
-        # Preenchimento de message_frame com 1 imagem com logo (label) e 1 label com texto,
+        # Preenchimento de title_frame com 1 imagem com logo (label) e 1 label com texto,
         # organizadas em 1 linha e 2 colunas
-        self.logo_label = Label(self.message_frame, bd = 0, image=self.logo)
+        self.logo_label = Label(self.title_frame, bd = 0, image=self.logo)
         self.logo_label.grid(row=0, column=0)
-        self.message_label = Label(self.message_frame, bg="#291A3B", text=' Gyges', font="arial 30", fg="white")
-        self.message_label.grid(row=0, column=1)
+        self.name_label = Label(self.title_frame, bg="#291A3B", text=' Gyges', font="arial 30", fg="white")
+        self.name_label.grid(row=0, column=1)
 
+        # Prenchimanto de frame_bottom com 1 label com texto
+        self.message_label = Label(self.table_frame_bottom, bg="#291A3B", text=self.message, font="arial 16", fg="white")
+        self.message_label.grid(row=0, column=0)
+        
         # Definição do menu de jogo
         self.menubar = Menu(self.main_window)
         self.menubar.option_add('*tearOff', FALSE)
@@ -88,14 +95,17 @@ class PlayerInterface:
         else:
             self.board.setJogoEmAndamento(True)
             self.atualizarInterface()
-            print(self.board.jogadorDaVez.getJogador())
+            self.message = "Vez do jogador " + str(self.board.jogadorDaVez.getJogador()+1)
+            self.message_label.configure(text=self.message)
 
     def restaurarEstadoInicial(self):
         self.board.limparTabuleiro()
+        self.message = ""
         self.atualizarInterface()
 
     def atualizarInterface(self):
         casas = self.board.getCasas()
+        self.message_label.configure(text=self.message)
         for coluna in range(8):
             for linha in range(6):     
                 peca = casas[linha][coluna].getPecaPosicao()
@@ -130,7 +140,7 @@ class PlayerInterface:
     def selecionarPosicao(self, event, line, column):
         print("CLICK"+" "+str(line)+" "+str(column))
         if self.board.getEstado() == 0:
-            self.board.selecionarPeca(line, column)
+            self.message = self.board.selecionarPeca(line, column)
         else:
-            self.board.selecionarDestino(line, column)
+            self.message = self.board.selecionarDestino(line, column)
         self.atualizarInterface()
