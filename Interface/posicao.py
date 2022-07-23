@@ -17,9 +17,6 @@ class Posicao():
         self.ocupada = False
         self.pecaPosicao = None
 
-    def posicaoSelecionada(self):
-        return self
-
     def moverPeca(self, posicao):
         self.ocupada = False
         posicao.posicionarPeca(self.pecaPosicao)

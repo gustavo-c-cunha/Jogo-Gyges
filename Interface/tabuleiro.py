@@ -7,7 +7,6 @@ class Tabuleiro():
         self.casas = [[None for x in range(8)] for y in range(6)]
         self.jogoEmAndamento = False
         self.jogadorDaVez = None
-        self.jogoFinalizado = None
         self.pecaSelecionada = None
         self.posicaoMExtra = None
         self.jogadores = [Jogador(0), Jogador(1)]
@@ -48,8 +47,6 @@ class Tabuleiro():
 
     def limparTabuleiro(self):
         # não tem retorno
-        self.jogadores[0].resetarJogador()
-        self.jogadores[1].resetarJogador()
         for coluna in range(8):
             for linha in range(6):
                 if coluna == 0 or coluna == 7:
@@ -142,7 +139,7 @@ class Tabuleiro():
 
 
     def verificarCasaVitoria(self, linha, coluna):
-        # retorna boolean
+        # retorna int
         if linha == 0 and coluna == 0:
             return 2
         elif linha == 0 and coluna == 7:
@@ -155,22 +152,16 @@ class Tabuleiro():
         if self.jogadorDaVez.getJogador() == 0:
             inicio = 1
             fim = posicao.getCoordenadas()[1]
-            if inicio == fim:
-                return True
         else:
             inicio = posicao.getCoordenadas()[1]
             fim = 6
-            if inicio == fim:
-                return True
+        if inicio == fim:
+            return True
         for i in range(inicio, fim):
             for j in range(6):
                 casa = self.casas[j][i].getOcupada()
                 if casa:
-                    if (self.jogadorDaVez.getJogador() == 0 and i == fim) or (self.jogadorDaVez.getJogador() == 1 and i == fim):
-                        print("caso extranho")
-                        pass
-                    else:
-                        return False
+                    return False
         return True
 
     def verificarCasaVazia(self, posicao):
