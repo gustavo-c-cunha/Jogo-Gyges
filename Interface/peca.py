@@ -15,3 +15,4 @@ class Peca():
 
     def getCasasMovimento(self):
         return self.casasMovimento
+        

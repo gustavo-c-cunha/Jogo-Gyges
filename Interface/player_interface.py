@@ -1,6 +1,6 @@
 from tkinter import *
 from tabuleiro import Tabuleiro
-from pprint import pprint
+
 class PlayerInterface:
     def __init__(self):
 

@@ -1,6 +1,3 @@
-from sqlalchemy import false, null
-
-
 class Posicao():
     
     def __init__(self, coord, vitoria):
