@@ -10,6 +10,7 @@ class Tabuleiro():
         self.jogadorDaVez = None
         self.pecaSelecionada = None
         self.posicaoMExtra = None
+        self.jogoFinalizado = False
         self.jogadores = [Jogador(0), Jogador(1)]
         self.estadoMovimento = 0
 
@@ -55,6 +56,7 @@ class Tabuleiro():
                     self.casas[linha][coluna].resetarPosicao()
         self.setJogoEmAndamento(False)
         self.setEstado(0)
+        self.jogoFinalizado = False
 
     def getProximoJogador(self):
         lado = self.jogadorDaVez.getJogador()
@@ -99,9 +101,10 @@ class Tabuleiro():
     def selecionarDestino(self, linha, coluna):
         if self.verificarDestino(linha, coluna):
             vitoria = self.verificarCasaVitoria(linha, coluna)
-            if vitoria != 3:
+            if vitoria != 3 or self.jogoFinalizado == True:
                 self.pecaSelecionada.getPecaPosicao().resetarPeca()
                 self.pecaSelecionada.moverPeca(self.casas[linha][coluna])
+                self.jogoFinalizado = True
                 return "Jogador "+str(vitoria)+" venceu!"
             else:
                 if self.verificarCasaVazia(self.casas[linha][coluna]):
