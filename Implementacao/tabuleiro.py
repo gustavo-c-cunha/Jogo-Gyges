@@ -148,8 +148,8 @@ class Tabuleiro():
             inicio = 1
             fim = posicao.getCoordenadas()[1]
         else:
-            inicio = posicao.getCoordenadas()[1]
-            fim = 6
+            inicio = 6
+            fim = posicao.getCoordenadas()[1]
         if inicio == fim:
             return True
         for i in range(inicio, fim):
