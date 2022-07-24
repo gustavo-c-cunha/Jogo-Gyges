@@ -91,12 +91,12 @@ class PlayerInterface:
     def iniciarPartida(self):
         control = self.board.verificarPartida()
         if control == True:
-            print('partida em andamento')
+            self.message = "Partida em Andamento"
         else:
             self.board.setJogoEmAndamento(True)
-            self.atualizarInterface()
             self.message = "Vez do jogador " + str(self.board.jogadorDaVez.getJogador()+1)
             self.message_label.configure(text=self.message)
+        self.atualizarInterface()
 
     def restaurarEstadoInicial(self):
         self.board.limparTabuleiro()

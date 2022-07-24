@@ -1,0 +1,8 @@
+Execução:
+- Executar arquivo main.py dentro da pasta "Implementação" para executar a implementação.
+
+Bibliotecas Python necessárias:
+- Tkinter (padrão)
+- Random (padrão)
+
+Versão do Python: 3.9.1
